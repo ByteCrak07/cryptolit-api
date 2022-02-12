@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int      @id @unique @default(autoincrement())
+  walletKey        String
+  username         String
+  email            String?
+  fullName         String?
+  imgUrl           String?
+  following        Int      @default(0)
+  followers        Int      @default(0)
+  donationUrl      String?
+  bio              String?
+  instaId          String?
+  instaLink        String?
+  instaVerified    Boolean  @default(false)
+  twitterId        String?
+  twitterLink      String?
+  twitterVerified  Boolean  @default(false)
+  facebookId       String?
+  facebookLink     String?
+  facebookVerified Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
