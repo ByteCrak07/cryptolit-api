@@ -12,8 +12,8 @@ datasource db {
 
 model User {
   id               Int      @id @unique @default(autoincrement())
-  walletKey        String
-  username         String
+  walletKey        String   @unique
+  username         String   @unique
   email            String?
   fullName         String?
   imgUrl           String?
