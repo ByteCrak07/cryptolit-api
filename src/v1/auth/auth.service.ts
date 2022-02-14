@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Auth } from './entity/auth.entity';
 import Web3 from 'web3';
 import { JwtService } from '@nestjs/jwt';
@@ -24,13 +28,19 @@ export class AuthService {
       throw new UnauthorizedException('Invalid signature');
     }
 
-    if (walletKey === recoveredKey)
-      return {
-        accessToken: this.jwtService.sign({
-          publicKey: walletKey,
-          signature: signature,
-        }),
-      };
+    if (walletKey.toLowerCase() === recoveredKey.toLowerCase()) {
+      const data = await this.validateUser(walletKey);
+      if (data)
+        return {
+          ...data,
+          accessToken: this.jwtService.sign({
+            publicKey: walletKey,
+            signature: signature,
+          }),
+        };
+
+      throw new NotFoundException("User doesn't exist");
+    }
 
     throw new UnauthorizedException('Invalid signature');
   }

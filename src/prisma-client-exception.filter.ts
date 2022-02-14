@@ -8,19 +8,27 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    let temp: string[];
 
     switch (exception.code) {
       case 'P2002':
         const status = HttpStatus.CONFLICT;
-        const message = exception.message.replace(/\n/g, '');
+        let message = exception.message.replace(/\n/g, '');
+        if (message.includes('Unique constraint failed on the fields')) {
+          temp = message.split('Unique constraint failed on the fields: ');
+          temp = temp[1].split('`');
+          temp.shift();
+          temp.pop();
+
+          message = `${temp.toString()} already exists`;
+        }
         response.status(status).json({
           statusCode: status,
           message: message,
         });
         break;
-      // TODO catch other error codes (e.g. 'P2000' or 'P2025')
+
       default:
-        // default 500 error code
         super.catch(exception, host);
         break;
     }

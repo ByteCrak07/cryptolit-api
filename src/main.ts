@@ -11,6 +11,8 @@ import { PrismaClientExceptionFilter } from './prisma-client-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   app.enableVersioning({ type: VersioningType.URI });
 
   app.useGlobalPipes(

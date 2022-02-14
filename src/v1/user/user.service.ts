@@ -24,7 +24,7 @@ export class UserService {
       throw new UnauthorizedException('Invalid signature');
     }
 
-    if (data.walletKey === recoveredKey) {
+    if (data.walletKey.toLowerCase() === recoveredKey.toLowerCase()) {
       const user = await this.prisma.user.create({ data: { ...data, imgUrl } });
       return {
         ...user,
@@ -48,7 +48,14 @@ export class UserService {
     throw new UnauthorizedException('No authorization');
   }
 
-  async findOne(username: string, authKey: string) {
+  async findOne(walletKey: string, authKey: string) {
+    if (authKey === process.env.CLIENT_AUTH_KEY)
+      return await this.prisma.user.findUnique({ where: { walletKey } });
+
+    throw new UnauthorizedException('No authorization');
+  }
+
+  async findOneWithUsername(username: string, authKey: string) {
     if (authKey === process.env.CLIENT_AUTH_KEY)
       return await this.prisma.user.findUnique({ where: { username } });
 

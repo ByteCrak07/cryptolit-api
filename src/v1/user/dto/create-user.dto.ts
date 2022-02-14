@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEthereumAddress, IsNotEmpty } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEthereumAddress,
+  IsNotEmpty,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsEthereumAddress()
@@ -8,9 +14,26 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @ApiProperty()
-  username: string;
+  signature: string;
 
   @IsNotEmpty()
   @ApiProperty()
-  signature: string;
+  username: string;
+
+  @IsOptional()
+  @ApiProperty()
+  fullName: string;
+
+  @IsOptional()
+  @IsEmail()
+  @ApiProperty()
+  email: string;
+
+  @IsBoolean()
+  @ApiProperty()
+  isWriter: boolean;
+
+  @IsBoolean()
+  @ApiProperty()
+  isCollector: boolean;
 }

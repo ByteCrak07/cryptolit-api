@@ -12,7 +12,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
-  ApiOkResponse,
+  ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -38,7 +38,7 @@ export class UploadController {
   @ApiBody({
     type: UploadDto,
   })
-  @ApiOkResponse({ type: FileUpload })
+  @ApiCreatedResponse({ type: FileUpload })
   @UseInterceptors(FileInterceptor('file', { fileFilter: imageFileFilter }))
   async upload(
     @UploadedFile() file: Express.Multer.File,
@@ -64,7 +64,7 @@ export class UploadController {
   @ApiBody({
     type: FileUploadDto,
   })
-  @ApiOkResponse({ type: FileUpload })
+  @ApiCreatedResponse({ type: FileUpload })
   @UseInterceptors(FileInterceptor('file', { fileFilter: imageFileFilter }))
   async postsUpload(@UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException('No file uploaded');

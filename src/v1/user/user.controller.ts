@@ -39,13 +39,19 @@ export class UserController {
     return this.userService.findAll(authKey);
   }
 
-  @Get(':username:auth_key')
+  @Get(':key&:auth_key')
   @ApiOkResponse({ type: UserEntity })
-  findOne(
+  findOne(@Param('key') walletKey: string, @Param('auth_key') authKey: string) {
+    return this.userService.findOne(walletKey, authKey);
+  }
+
+  @Get('name/:username&:auth_key')
+  @ApiOkResponse({ type: UserEntity })
+  findOneWithUsername(
     @Param('username') username: string,
     @Param('auth_key') authKey: string,
   ) {
-    return this.userService.findOne(username, authKey);
+    return this.userService.findOneWithUsername(username, authKey);
   }
 
   @Patch(':key')

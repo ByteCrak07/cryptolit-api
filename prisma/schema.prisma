@@ -11,8 +11,8 @@ datasource db {
 }
 
 model User {
-  id               Int      @id @unique @default(autoincrement())
-  walletKey        String   @unique
+  id               Int      @unique @default(autoincrement())
+  walletKey        String   @id @unique
   username         String   @unique
   email            String?
   fullName         String?
@@ -30,5 +30,7 @@ model User {
   facebookId       String?
   facebookLink     String?
   facebookVerified Boolean  @default(false)
+  isWriter         Boolean
+  isCollector      Boolean
   createdAt        DateTime @default(now())
 }

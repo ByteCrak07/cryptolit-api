@@ -19,9 +19,11 @@ CREATE TABLE "User" (
     "facebookId" TEXT,
     "facebookLink" TEXT,
     "facebookVerified" BOOLEAN NOT NULL DEFAULT false,
+    "isWriter" BOOLEAN NOT NULL,
+    "isCollector" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("walletKey")
 );
 
 -- CreateIndex

@@ -59,6 +59,12 @@ export class UserEntity implements User {
   @ApiProperty({ required: false })
   facebookVerified: boolean;
 
+  @ApiProperty({ required: false })
+  isWriter: boolean;
+
+  @ApiProperty({ required: false })
+  isCollector: boolean;
+
   @ApiProperty()
   createdAt: Date;
 }
