@@ -33,4 +33,23 @@ model User {
   isWriter         Boolean
   isCollector      Boolean
   createdAt        DateTime @default(now())
+  Post             Post[]
+}
+
+model Post {
+  id              Int       @id @unique @default(autoincrement())
+  title           String
+  excerpt         String?
+  slug            String    @unique
+  featureImage    String?
+  featureImageAlt String?
+  type            String
+  genre           String[]
+  content         String?
+  published       Boolean   @default(false)
+  archived        Boolean   @default(false)
+  author          User      @relation(fields: [authorWalletKey], references: [walletKey])
+  authorWalletKey String
+  createdAt       DateTime  @default(now())
+  publishedOn     DateTime?
 }

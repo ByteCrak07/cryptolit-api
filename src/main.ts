@@ -44,6 +44,7 @@ async function bootstrap() {
     customSiteTitle: 'Cryptoliterature API',
   });
 
-  await app.listen(5000);
+  const port = process.env.PORT || 5000;
+  await app.listen(port);
 }
 bootstrap();
