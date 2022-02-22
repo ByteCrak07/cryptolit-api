@@ -1,22 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum, IsArray, IsOptional } from 'class-validator';
 
 export const PostTypes = ['Blog', 'Novel', 'Short story', 'Poem', 'Quote'];
 
 export class UpdatePostDto {
-  @IsNotEmpty()
   @ApiProperty()
   title: string;
 
+  @IsOptional()
   @IsEnum(PostTypes)
   @ApiProperty()
   type: string;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @IsArray()
   @ApiProperty()
   genre: string[];
 
-  @IsNotEmpty()
   @ApiProperty()
   slug: string;
 

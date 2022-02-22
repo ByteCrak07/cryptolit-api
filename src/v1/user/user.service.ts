@@ -62,24 +62,14 @@ export class UserService {
     throw new UnauthorizedException('No authorization');
   }
 
-  async update(walletKey: string, jwt: string, updateUserDto: UpdateUserDto) {
-    const { publicKey }: any = this.jwtService.decode(jwt.split(' ').at(-1));
-
-    if (walletKey === publicKey)
-      return await this.prisma.user.update({
-        data: updateUserDto,
-        where: { walletKey },
-      });
-
-    throw new UnauthorizedException('Cannot access another user');
+  async update(walletKey: string, updateUserDto: UpdateUserDto) {
+    return await this.prisma.user.update({
+      data: updateUserDto,
+      where: { walletKey },
+    });
   }
 
-  async remove(walletKey: string, jwt: string) {
-    const { publicKey }: any = this.jwtService.decode(jwt.split(' ').at(-1));
-
-    if (walletKey === publicKey)
-      return await this.prisma.user.delete({ where: { walletKey } });
-
-    throw new UnauthorizedException('Cannot access another user');
+  async remove(walletKey: string) {
+    return await this.prisma.user.delete({ where: { walletKey } });
   }
 }

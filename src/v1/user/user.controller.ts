@@ -21,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateUserEntity } from './entities/create-user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { IsOwnerGuard } from '../auth/is-owner.guard';
 
 @Controller({ path: 'user', version: '1' })
 @ApiTags('User')
@@ -55,25 +56,21 @@ export class UserController {
   }
 
   @Patch(':key')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsOwnerGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   update(
     @Param('key') walletKey: string,
-    @Headers('Authorization') jwt: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(walletKey, jwt, updateUserDto);
+    return this.userService.update(walletKey, updateUserDto);
   }
 
   @Delete(':key')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, IsOwnerGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
-  remove(
-    @Param('key') walletKey: string,
-    @Headers('Authorization') jwt: string,
-  ) {
-    return this.userService.remove(walletKey, jwt);
+  remove(@Param('key') walletKey: string) {
+    return this.userService.remove(walletKey);
   }
 }

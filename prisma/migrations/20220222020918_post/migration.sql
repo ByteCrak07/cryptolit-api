@@ -2,18 +2,18 @@
 CREATE TABLE "Post" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "excerpt" TEXT NOT NULL,
+    "excerpt" TEXT,
     "slug" TEXT NOT NULL,
-    "featureImage" TEXT NOT NULL,
-    "featureImageAlt" TEXT NOT NULL,
+    "featureImage" TEXT,
+    "featureImageAlt" TEXT,
     "type" TEXT NOT NULL,
     "genre" TEXT[],
-    "content" TEXT NOT NULL,
-    "published" BOOLEAN NOT NULL,
-    "archived" BOOLEAN NOT NULL,
+    "content" TEXT,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "archived" BOOLEAN NOT NULL DEFAULT false,
     "authorWalletKey" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "publishedOn" INTEGER NOT NULL,
+    "publishedOn" TIMESTAMP(3),
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );

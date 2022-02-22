@@ -1,7 +1,0 @@
--- AlterTable
-ALTER TABLE "Post" ALTER COLUMN "excerpt" DROP NOT NULL,
-ALTER COLUMN "featureImage" DROP NOT NULL,
-ALTER COLUMN "featureImageAlt" DROP NOT NULL,
-ALTER COLUMN "content" DROP NOT NULL,
-ALTER COLUMN "published" SET DEFAULT false,
-ALTER COLUMN "archived" SET DEFAULT false;

@@ -6,6 +6,7 @@ import {
   Body,
   BadRequestException,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -65,13 +66,13 @@ export class UploadController {
     type: FileUploadDto,
   })
   @ApiCreatedResponse({ type: FileUpload })
-  @UseInterceptors(FileInterceptor('file', { fileFilter: imageFileFilter }))
+  @UseInterceptors(FileInterceptor('upload', { fileFilter: imageFileFilter }))
   async postsUpload(@UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException('No file uploaded');
 
     return await this.uploadService.upload(
       file,
-      'posts',
+      'postAssets',
       randomUUID() + file.originalname,
     );
   }
