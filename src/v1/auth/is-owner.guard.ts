@@ -17,13 +17,15 @@ export class IsOwnerGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     const walletKey = request.params.key;
-    const rawHeaders = request.rawHeaders;
-    let authorization = rawHeaders.indexOf('authorization');
-    if (authorization === -1)
-      authorization = rawHeaders.indexOf('Authorization');
+    const rawHeaders: [string] = request.rawHeaders;
 
-    const jwt = rawHeaders[authorization + 1];
-    const { publicKey }: any = this.jwtService.decode(jwt.split(' ').at(-1));
+    let jwt: string;
+
+    rawHeaders.forEach((header) => {
+      if (header.startsWith('Bearer')) jwt = header;
+    });
+
+    const { publicKey }: any = this.jwtService.decode(jwt.split(' ')[1]);
 
     if (publicKey === walletKey) return true;
 
