@@ -5,7 +5,8 @@ import { Logger, Injectable, GatewayTimeoutException } from '@nestjs/common';
 export class UploadService {
   async upload(file: Express.Multer.File, type: string, name: string) {
     const bucketS3 = process.env.BUCKET_NAME;
-    const fileFormat = file.originalname.split('.').at(-1);
+    const fileFormat = file.mimetype.split('/')[1];
+
     const fileResponse: any = await this.uploadS3(
       file.buffer,
       bucketS3,
