@@ -6,7 +6,6 @@ import {
   Body,
   BadRequestException,
   UseGuards,
-  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
