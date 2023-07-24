@@ -1,0 +1,7 @@
+api.{$BASE_URL} {
+    reverse_proxy backend:5000       
+}
+
+db.{$BASE_URL} {
+    reverse_proxy pgadmin:8888
+}

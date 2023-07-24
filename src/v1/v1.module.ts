@@ -12,7 +12,7 @@ import { PostModule } from './post/post.module';
     UploadModule,
     {
       ...JwtModule.register({
-        secret: process.env.JWTSecret,
+        secret: process.env.JWT_SECRET,
         signOptions: { expiresIn: '1d' },
       }),
       global: true,
